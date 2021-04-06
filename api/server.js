@@ -1,18 +1,20 @@
 const express = require("express")
-
 const cors = require('cors')
-
 const helmet = require('helmet')
 
-const configureRoutes = require('../config/routes.js')
 
+const authRouter = require('../auth/auth-router');
+const userRouter = require('../users/user-router')
 const server = express();
 
 server.use(helmet())
 server.use(cors())
 server.use(express.json())
 
-configureRoutes(server)
+server.use('/api/auth', authRouter);
+server.use('/api/user', userRouter);
+
+
 
 server.get('/', (req, res) => {
     res.send(`server running`)
